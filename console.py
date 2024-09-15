@@ -6,7 +6,7 @@ serve as the entry point of the entire project
 
 from cmd import Cmd
 from models import storage
-#rom models.engine.errors import *
+from models.engine.errors import *
 import shlex
 from models.base_model import BaseModel
 from models.user import User
@@ -19,6 +19,10 @@ from models.review import Review
 
 # Global variable of registered models
 classes = storage.models
+
+
+class InstanceNotFoundError:
+    pass
 
 
 class HBNBCommand(Cmd):
@@ -72,10 +76,10 @@ class HBNBCommand(Cmd):
             try:
                 inst = storage.find_by_id(*args)
                 print(inst)
-            #except ModelNotFoundError:
+            except ModelNotFoundError:
                 print("** class doesn't exist **")
-            #except InstanceNotFoundError:
-                #print("** no instance found **")
+            except InstanceNotFoundError:
+                print("** no instance found **")
         else:
             print("** Too many argument for show **")
             pass
@@ -91,9 +95,9 @@ class HBNBCommand(Cmd):
         elif n == 2:
             try:
                 storage.delete_by_id(*args)
-            #except ModelNotFoundError:
+            except ModelNotFoundError:
                 print("** class doesn't exist **")
-            #except InstanceNotFoundError:
+            except InstanceNotFoundError:
                 print("** no instance found **")
         else:
             print("** Too many argument for destroy **")
@@ -108,7 +112,7 @@ class HBNBCommand(Cmd):
         if n < 2:
             try:
                 print(storage.find_all(*args))
-            #except ModelNotFoundError:
+            except ModelNotFoundError:
                 print("** class doesn't exist **")
         else:
             print("** Too many argument for all **")
@@ -130,9 +134,9 @@ class HBNBCommand(Cmd):
         else:
             try:
                 storage.update_one(*args[0:4])
-            #except ModelNotFoundError:
+            except ModelNotFoundError:
                 print("** class doesn't exist **")
-            #except InstanceNotFoundError:
+            except InstanceNotFoundError:
                 print("** no instance found **")
 
     def do_models(self, arg):
@@ -154,7 +158,7 @@ class HBNBCommand(Cmd):
             return
         except AttributeError:
             print("** invalid method **")
-        # except InstanceNotFoundError:
+        except InstanceNotFoundError:
             print("** no instance found **")
         except TypeError as te:
             field = te.args[0].split()[-1].replace("_", " ")

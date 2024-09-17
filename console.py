@@ -21,6 +21,10 @@ from models.review import Review
 classes = storage.models
 
 
+class InstanceNotFoundError:
+    pass
+
+
 class HBNBCommand(Cmd):
     """
     The Console based driver of the AirBnb Clone

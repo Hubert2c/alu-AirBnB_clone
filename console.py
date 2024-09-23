@@ -163,7 +163,7 @@ class HBNBCommand(Cmd):
         except TypeError as te:
             field = te.args[0].split()[-1].replace("_", " ")
             field = field.strip("'")
-            print(f"** {field} missing **")
+            print(f"** {field} missing **");
         except Exception as e:
             print("** invalid syntax **")
             pass
